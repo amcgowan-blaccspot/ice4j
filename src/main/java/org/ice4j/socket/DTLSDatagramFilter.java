@@ -65,9 +65,9 @@ public class DTLSDatagramFilter
         }
 
         if (!result) {
-            logger.info("[FMDB] - Not DTLS");
+        //    logger.info("[FMDB] - Not DTLS");
         } else {
-            logger.info("[FMDB] - This is DTLS");
+        //    logger.info("[FMDB] - This is DTLS");
         }
 
 
