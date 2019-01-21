@@ -1901,6 +1901,8 @@ public class Agent
         boolean allListsEnded = true;
         boolean atLeastOneListSucceeded = false;
 
+        logger.info("[FMDB] - Checking list state");
+
         if (getState().isEstablished())
         {
             return;
@@ -1923,6 +1925,12 @@ public class Agent
                         " is COMPLETED");
                 atLeastOneListSucceeded = true;
             }
+
+
+            logger.info("[FMDB] - Checklist info:");
+            stream.getCheckList().printDebug();
+
+
         }
 
 
@@ -1936,6 +1944,21 @@ public class Agent
             //all lists ended but none succeeded. No love today ;(
             if (logger.isLoggable(Level.INFO))
             {
+                if (connCheckClient.isAlive()) {
+                    logger.info("[FMDB] - ConnCheckClient is Alive");
+                } else {
+                    logger.info("[FMDB] - Failed due to ConnCheckClient not being alive");
+
+
+
+                }
+                if (connCheckServer.isAlive()) {
+                    logger.info("[FMDB] - ConnCheckServer is Alive");
+                } else {
+                    logger.info("[FMDB] - Failed due to ConnCheckServer not being alive");
+                }
+
+
                 if (connCheckClient.isAlive()
                     || connCheckServer.isAlive())
                 {

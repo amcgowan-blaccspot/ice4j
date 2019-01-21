@@ -18,6 +18,7 @@
 package org.ice4j.socket;
 
 import java.net.*;
+import java.util.logging.*;
 
 /**
  * A {@code DatagramPacketFilter} which accepts DTLS packets only.
@@ -27,6 +28,9 @@ import java.net.*;
 public class DTLSDatagramFilter
     implements DatagramPacketFilter
 {
+    private static final java.util.logging.Logger logger
+            = java.util.logging.Logger.getLogger(DTLSDatagramFilter.class.getName());
+
     /**
      * Determines whether {@code p} looks like a DTLS packet.
      *
@@ -51,14 +55,23 @@ public class DTLSDatagramFilter
      */
     public static boolean isDTLS(byte[] data, int off, int len)
     {
+        boolean result = false;
+
         if (len > 0)
         {
             int fb = data[off] & 0xff;
 
-            return 19 < fb && fb < 64;
+            result = 19 < fb && fb < 64;
         }
 
-        return false;
+        if (!result) {
+            logger.info("[FMDB] - Not DTLS");
+        } else {
+            logger.info("[FMDB] - This is DTLS");
+        }
+
+
+        return result;
     }
 
     /**

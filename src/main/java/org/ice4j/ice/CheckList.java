@@ -20,6 +20,7 @@ package org.ice4j.ice;
 import java.beans.*;
 import java.util.*;
 
+import bs.log;
 import org.ice4j.util.Logger;
 
 /**
@@ -130,6 +131,8 @@ public class CheckList
     {
         CheckListState oldState = this.state;
         this.state = newState;
+
+        logger.info("[FMDB] - Changing state to " + newState + " from " + oldState);
 
         fireStateChange(oldState, newState);
     }
@@ -410,6 +413,7 @@ public class CheckList
                      || (pair.getState() == CandidatePairState.IN_PROGRESS
                          && pair.getPriority() < nominatedPair.getPriority())))
             {
+                logger.info("[FMDB] - Removing pair - not sync");
                 pairsIter.remove();
             }
         }
@@ -428,6 +432,7 @@ public class CheckList
                             && pair.getPriority() < nominatedPair
                                                         .getPriority())))
                 {
+                    logger.info("[FMDB] - Removing Pair - Sync");
                     triggeredPairsIter.remove();
                 }
             }
@@ -595,4 +600,26 @@ public class CheckList
     {
         return parentStream;
     }
+
+
+    public void printDebug() {
+        log.info(classLogger,"||-----------------------------------------||");
+        log.info(classLogger, "Checklist debug for " + this.getName());
+        log.printProperty(classLogger, this.getName()+"State", this.state.toString());
+        log.printProperty(classLogger, this.getName()+"Checklist Count", this.elementCount + "");
+        log.printProperty(classLogger, this.getName()+"Is Active", this.isActive() + "");
+        log.printProperty(classLogger, this.getName()+"Is Frozen", this.isFrozen() + "");
+
+        log.info(classLogger,this.getName()+"--------PAIRS--------");
+
+        for (CandidatePair cp : this) {
+            cp.printDebug(this.getName());
+        }
+
+        log.info(classLogger,this.getName()+"-----------ENDPAIRS--------");
+
+
+
+    }
+
 }

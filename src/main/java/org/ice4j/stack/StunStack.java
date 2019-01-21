@@ -1147,6 +1147,8 @@ public class StunStack
                                 evt.getLocalAddress(),
                                 evt.getRemoteAddress());
 
+                logger.info("[FMDB] - Invalid username");
+
                 throw new IllegalArgumentException(
                     "Non-recognized username: " + username);
             }
@@ -1171,6 +1173,8 @@ public class StunStack
                                 evt.getLocalAddress(),
                                 evt.getRemoteAddress());
 
+                logger.info("[FMDB] - Missing message integ");
+
                 throw new IllegalArgumentException(
                     "Missing USERNAME in the presence of MESSAGE-INTEGRITY: ");
             }
@@ -1190,6 +1194,8 @@ public class StunStack
                                 evt.getLocalAddress(),
                                 evt.getRemoteAddress());
 
+                logger.info("[FMDB] - invalid message integ");
+
                 throw new IllegalArgumentException(
                     "Wrong MESSAGE-INTEGRITY value.");
             }
@@ -1201,6 +1207,8 @@ public class StunStack
                             request.getMessageType(),
                             ErrorCodeAttribute.UNAUTHORIZED,
                             "Missing MESSAGE-INTEGRITY.");
+
+            logger.info("[FMDB] - Missing message integ - required");
 
             sendResponse(request.getTransactionID(), error,
                             evt.getLocalAddress(),
@@ -1230,6 +1238,8 @@ public class StunStack
             sendResponse(request.getTransactionID(), error,
                             evt.getLocalAddress(),
                             evt.getRemoteAddress());
+
+            logger.info("[FMDB] - Unknown attrib");
 
             throw new IllegalArgumentException(
                 "Unknown attribute(s).");

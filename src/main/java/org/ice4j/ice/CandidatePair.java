@@ -39,6 +39,9 @@ import org.ice4j.stack.*;
 public class CandidatePair
     implements Comparable<CandidatePair>
 {
+    private static final java.util.logging.Logger logger
+            = java.util.logging.Logger.getLogger(CandidatePair.class.getName());
+
     /**
      * The value of the <tt>consentFreshness</tt> property of
      * <tt>CandidatePair</tt> which indicates that the time in milliseconds of
@@ -292,6 +295,7 @@ public class CandidatePair
 
         if (newState == CandidatePairState.IN_PROGRESS)
         {
+
             if (tranID == null)
             {
                 throw new IllegalArgumentException(
@@ -780,5 +784,17 @@ public class CandidatePair
         }
 
         return localCandidate.getCandidateIceSocketWrapper();
+    }
+
+    public void printDebug(String name) {
+        bs.log.info(logger,name+"--------CANDIDATE---------");
+        bs.log.info(logger, name+this.toString());
+        bs.log.printProperty(logger, name+"IsNominated", this.isNominated + "");
+        bs.log.printProperty(logger, name+"IsFrozen", this.isFrozen()+"");
+        bs.log.printProperty(logger, name+"IsValid", this.isValid+"");
+        bs.log.printProperty(logger, name+"UseCandidate", this.useCandidate+"");
+        bs.log.printProperty(logger, name+"UseCandidateSent", this.useCandidateSent+"");
+        bs.log.printProperty(logger, name+"UseCandidateReceived", this.useCandidateReceived()+"");
+        bs.log.info(logger, name+"-------ENDCANDIDATE-------");
     }
 }
