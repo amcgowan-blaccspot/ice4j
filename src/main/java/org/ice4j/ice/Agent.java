@@ -1885,6 +1885,7 @@ public class Agent
         if (parentStream.allComponentsHaveSelected()
            && checkList.getState() == CheckListState.RUNNING)
         {
+            bs.log.info(classLogger,"[FMDB] - We need to get here!");
             //The agent MUST change the state of processing for its check
             //list for that media stream to Completed.
             checkList.setState(CheckListState.COMPLETED);
@@ -1914,6 +1915,8 @@ public class Agent
         {
             CheckListState checkListState = stream.getCheckList().getState();
 
+
+
             if (checkListState == CheckListState.RUNNING)
             {
                 allListsEnded = false;
@@ -1934,6 +1937,10 @@ public class Agent
         }
 
 
+
+
+
+
         if (!allListsEnded)
         {
             return;
@@ -1941,6 +1948,20 @@ public class Agent
 
         if (!atLeastOneListSucceeded)
         {
+            for (IceMediaStream s : streams) {
+                List<Component> components = s.getComponents();
+                for (Component c : components) {
+                    bs.log.info(classLogger, "Component Name = " + c.getName());
+                    bs.log.info(classLogger, "Component String: " + c.toString());
+                    CandidatePair pair = c.getSelectedPair();
+                    if (pair == null) {
+                        bs.log.info(classLogger, "No selected pair for this component");
+                    }
+                }
+
+            }
+
+
             //all lists ended but none succeeded. No love today ;(
             if (logger.isLoggable(Level.INFO))
             {
