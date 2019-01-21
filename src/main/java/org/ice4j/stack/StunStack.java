@@ -1147,7 +1147,13 @@ public class StunStack
                                 evt.getLocalAddress(),
                                 evt.getRemoteAddress());
 
-                logger.info("[FMDB] - Invalid username");
+                logger.info("[FMDB] - Invalid username " + username);
+                logger.info("[FMDB] - Message Type: " + request.getMessageType());
+                logger.info("[FMDB] - Local: " + evt.getLocalAddress() + " Remote: " + evt.getRemoteAddress());
+                logger.info("[FMDB] - Transaction ID: " + request.getTransactionID());
+                logger.info("[FMDB] - Request was: " + request.toString());
+                logger.info("[FMDB] - Name: " + request.getName());
+                logger.info("[FMDB] - EvtMessage: " + evt.toString());
 
                 throw new IllegalArgumentException(
                     "Non-recognized username: " + username);
