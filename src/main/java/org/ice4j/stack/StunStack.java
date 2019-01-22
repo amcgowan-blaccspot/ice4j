@@ -1157,6 +1157,8 @@ public class StunStack
 
                 throw new IllegalArgumentException(
                     "Non-recognized username: " + username);
+            } else {
+                logger.info("[FMDB] - Username: " + username + " is valid");
             }
         }
 
@@ -1408,6 +1410,7 @@ public class StunStack
 
         if ((username.length() < 1) || (colon < 1))
         {
+            logger.info("invalid username format for " + username);
             if(logger.isLoggable(Level.FINE))
             {
                 logger.log(Level.FINE, "Received a message with an improperly "
@@ -1418,7 +1421,16 @@ public class StunStack
 
         String lfrag = username.substring(0, colon);
 
-        return getCredentialsManager().checkLocalUserName(lfrag);
+        boolean isLocalUsernameCorrect = getCredentialsManager().checkLocalUserName(lfrag);
+
+        if (isLocalUsernameCorrect) {
+            logger.info("[FMDB] - " + lfrag + " is valid");
+        } else {
+            logger.info("[FMDB] - " + lfrag + " NO VALID BAD ERROPR");
+        }
+
+
+        return isLocalUsernameCorrect;
     }
 
     /**
