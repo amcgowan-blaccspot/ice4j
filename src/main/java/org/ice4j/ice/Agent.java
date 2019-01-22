@@ -131,6 +131,7 @@ public class Agent
         @Override
         public void run()
         {
+            logger.error("[FMDB] - ICE AGENT TIMEOUT");
             terminate(IceProcessingState.TERMINATED);
             synchronized (terminationFutureSyncRoot)
             {
@@ -1827,6 +1828,7 @@ public class Agent
     {
         if (!isControlling())
         {
+            logger.info("[FMDB] - Not allowed to nominate");
             throw new IllegalStateException(
                     "Only controlling agents can nominate pairs");
         }
